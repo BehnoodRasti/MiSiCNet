@@ -6,7 +6,4 @@ MiSiCNet is a deep learning-based technique for blind hyperspectral unmixing. Mi
 To run the code change the path to the correct directory. You need instal the dependencies i. e., torch, numpy, and matplotlib (for ploting).   
 
 
-![GifMaker_20220125172826580](https://user-images.githubusercontent.com/61419984/151018568-b380b6da-d782-4079-aff6-81af290cf5bb.gif) width="250" height="250"/> 
-
-
-![GifMaker_20220125173129571](https://user-images.githubusercontent.com/61419984/151018587-409377a3-8f65-4866-a302-a7d3df9a6c7e.gif)
+![GifMaker_20220125172826580](https://user-images.githubusercontent.com/61419984/151018568-b380b6da-d782-4079-aff6-81af290cf5bb.gif)[GifMaker_20220125173129571](https://user-images.githubusercontent.com/61419984/151018587-409377a3-8f65-4866-a302-a7d3df9a6c7e.gif)
