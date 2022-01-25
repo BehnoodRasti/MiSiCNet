@@ -200,10 +200,11 @@ for fi in tqdm(range(1)):
                   plt.plot(Eest)
                   plt.show()
     #%%
-        if  save_result is True:
-                scipy.io.savemat("C:/Users/behnood/Desktop/Test/EestdB%01d%01d.mat" % (fi+2, fj+1),
-                                  {'Eest%01d%01d' % (fi+2, fj+1):Eest})
-                scipy.io.savemat("C:/Users/behnood/Desktop/Test/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
-                                  {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
-                scipy.io.savemat("C:/Users/behnood/Desktop/Test/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
-                                  {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
+        # if  save_result is True:
+        #         scipy.io.savemat("C:/Users/behnood/Desktop/Test/EestdB%01d%01d.mat" % (fi+2, fj+1),
+        #                           {'Eest%01d%01d' % (fi+2, fj+1):Eest})
+        #         scipy.io.savemat("C:/Users/behnood/Desktop/Test/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
+        #                           {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
+        #         scipy.io.savemat("C:/Users/behnood/Desktop/Test/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
+        #                           {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
+
