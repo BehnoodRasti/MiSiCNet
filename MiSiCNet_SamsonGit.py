@@ -41,7 +41,7 @@ PLOT = True
 #%% Load image
 import scipy.io
 #%%
-fname2  = "/home/nvidia/MiSiCNet/MiSiCNet/HS Data/Apex/Y_clean.mat"
+fname2  = "/home/nvidia/MiSiCNet/MiSiCNet/HS Data/Samson/Y_clean.mat"
 mat2 = scipy.io.loadmat(fname2)
 img_np_gt = mat2["Y_clean"]
 img_np_gt = img_np_gt.transpose(2,0,1)
