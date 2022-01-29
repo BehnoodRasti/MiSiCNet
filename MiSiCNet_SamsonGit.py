@@ -41,7 +41,7 @@ PLOT = True
 #%% Load image
 import scipy.io
 #%%
-fname2  = "C:/Users/behnood/Desktop/VMCNN/Samson/MiSiCNet/Y_clean.mat"
+fname2  = "/home/nvidia/MiSiCNet/MiSiCNet/HS Data/Apex/Y_clean.mat"
 mat2 = scipy.io.loadmat(fname2)
 img_np_gt = mat2["Y_clean"]
 img_np_gt = img_np_gt.transpose(2,0,1)
@@ -58,11 +58,9 @@ img_np_gt = img_np_gt.transpose(2,0,1)
 rmax=3#E_np.shape[1] 
 #%%
 save_result=False
-import time
-from tqdm import tqdm
 
-for fi in tqdm(range(1)):
-    for fj in tqdm(range(1)):
+for fi in (range(1)):
+    for fj in (range(1)):
             #%%
         #img_noisy_np = get_noisy_image(img_np_gt, 1/10)
         img_noisy_np = img_np_gt#add_noise(img_np_gt, 1/npar[0,fi])#11.55 20 dB, 36.7 30 dB, 116.5 40 dB
