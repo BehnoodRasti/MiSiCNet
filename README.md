@@ -9,6 +9,8 @@ All the datasets used in the manuscsript are uploaded here expet WDC which you c
 
 To run the code, change the path to the correct directory. You need to install the dependencies, i. e., torch, numpy, and matplotlib (for plotting), scipy.io, tqdm (for simulated datasets). You need to select the value of lambda (your dataset might change, but we use 100 for real datasets) and rmax (the number of endmembers). Here are the results of training over iterations. The gifs show how the endmembers and abundances converge over the iterations for a highly mixed scenario and a noisy simulated dataset (20 dB).
 
+To speed up the processing time you can make the PLOT flag False or set show_every=1000.
+
 
 <img src="https://user-images.githubusercontent.com/61419984/151020437-d22dc981-2a46-44de-9ef9-a3dd09873b14.gif" width="400" height="200"><img src="https://user-images.githubusercontent.com/61419984/151022010-822e93ab-65b9-4376-b168-c626b2a253bb.gif" width="400" height="200">
 
