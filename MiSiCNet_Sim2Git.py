@@ -40,7 +40,7 @@ PLOT = True
 #%% Load image
 import scipy.io
 #%%
-fname2  = "C:/Users/behnood/Desktop/VMCNN/Diffi/Y_clean.mat"
+fname2  = "/home/nvidia/MiSiCNet/MiSiCNet/HS Data/Sim2/Y_clean.mat"
 mat2 = scipy.io.loadmat(fname2)
 img_np_gt = mat2["Y_clean"]
 img_np_gt = img_np_gt.transpose(2,0,1)
@@ -64,7 +64,6 @@ npar[0,3]=555
 tol1=npar.shape[1]
 tol2=5
 save_result=False
-import time
 from tqdm import tqdm
 
 for fi in tqdm(range(tol1)):
