@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan 25 15:17:16 2022
+Created on Tue Oct  5 19:13:50 2021
 
 @author: behnood
 """
@@ -17,6 +17,7 @@ import numpy as np
 #import math
 import torch
 import torch.optim
+import torch.nn as nn
 
 # from skimage.measure import compare_psnr
 # from skimage.measure import compare_mse
@@ -27,7 +28,7 @@ import torch.optim
 # from skimage.metrics.simple_metrics import _as_floats
 # from skimage.metrics.simple_metrics import mean_squared_error
 
-# from UtilityMine import compare_snr
+#from UtilityMine import add_noise
 # from UtilityMine import find_endmember
 # from UtilityMine import add_noise
 from UtilityMine import *
@@ -40,30 +41,33 @@ PLOT = True
 #%% Load image
 import scipy.io
 #%%
-fname2  = "/home/nvidia/MiSiCNet/MiSiCNet/HS Data/WDC/Y_clean.mat"
+fname2  = "HS Data/WDC/Y_clean.mat"
 mat2 = scipy.io.loadmat(fname2)
 img_np_gt = mat2["Y_clean"]
 img_np_gt = img_np_gt.transpose(2,0,1)
 [p1, nr1, nc1] = img_np_gt.shape
 #%%
-# fname3  = "C:/Users/behnood/Desktop/VMCNN/WDC/MiSiCNet/A_true.mat"
+# fname3  = "C:/Users/behnood/Desktop/VMCNN/Easy/A_true.mat"
 # mat3 = scipy.io.loadmat(fname3)
 # A_true_np = mat3["A_true"]
 # A_true_np = A_true_np.transpose(2,0,1)
 #%%
-# fname4  = "C:/Users/behnood/Desktop/VMCNN/WDC/MiSiCNet/E.mat"
+# fname4  = "C:/Users/behnood/Desktop/VMCNN/Easy/E.mat"
 # mat4 = scipy.io.loadmat(fname4)
 # E_np = mat4["E"]
 rmax=6#E_np.shape[1] 
 #%%
-save_result=False
 
-for fi in (range(1)):
-    for fj in (range(1)):
+tol2=1
+save_result=False
+from tqdm import tqdm
+
+for fi in tqdm(range(1)):
+    for fj in tqdm(range(tol2)):
             #%%
         #img_noisy_np = get_noisy_image(img_np_gt, 1/10)
-        img_noisy_np = img_np_gt#add_noise(img_np_gt, 1/npar[0,fi])#11.55 20 dB, 36.7 30 dB, 116.5 40 dB
-        # print(compare_snr(img_np_gt, img_noisy_np))
+        img_noisy_np = img_np_gt# add_noise(img_np_gt, 1/npar[0,fi])#11.55 20 dB, 36.7 30 dB, 116.5 40 dB
+        #print(compare_snr(img_np_gt, img_noisy_np))
         img_resh=np.reshape(img_noisy_np,(p1,nr1*nc1))
         V, SS, U = scipy.linalg.svd(img_resh, full_matrices=False)
         PC=np.diag(SS)@U
@@ -139,10 +143,10 @@ for fi in (range(1)):
             B = torch.from_numpy(np.identity(rmax)).type(dtype)
             loss2 = torch.norm(torch.mm(End2,B.view((rmax,rmax)))-O, 'fro')**2
             return loss1+lamb*loss2
-        img_noisy_torch = np_to_torch(img_resh_DN).view(1,p1,nr1,nc1).type(dtype)
+        img_noisy_torch = torch.from_numpy(img_resh_DN).view(1,p1,nr1,nc1).type(dtype)
         net_input1 = get_noise(input_depth, INPUT,
             (img_noisy_np.shape[1], img_noisy_np.shape[2])).type(dtype).detach()
-        E_torch = np_to_torch(E_np1).type(dtype)
+        E_torch = torch.from_numpy(E_np1).type(dtype)
         #%%
         # net_input_saved = net_input1.detach().clone()
         # noise = net_input1.detach().clone()
@@ -151,9 +155,7 @@ for fi in (range(1)):
         i = 0
         def closure1():
             
-            global i, RMSE_LR, RMSE_LR_ave, RMSE_HR, out_LR_np, out_avg_np, out_LR\
-                , out_avg,out_HR_np, out_HR_avg, out_HR_avg_np, RMSE_LR_last, last_net\
-                    , net_input,RMSE_LR_avg,RMSE_HR_avg,RE_HR_avg, RE_HR, Eest,out_spec
+            global i, out_LR_np, out_avg, out_avg_np, Eest
             
             out_LR,out_spec = net1(net_input1)
 #            out_HR=torch.mm(E_torch.view(p1,rmax),out_LR.view(rmax,nr1*nc1))
@@ -180,7 +182,7 @@ for fi in (range(1)):
                 f, ((ax1, ax2)) = plt.subplots(1, 2, sharey=True, figsize=(10,10))
                 ax1.imshow(np.stack((out_LR_np[2,:,:],out_LR_np[1,:,:],out_LR_np[0,:,:]),2))
                 ax2.imshow(np.stack((out_avg_np[2,:,:],out_avg_np[1,:,:],out_avg_np[0,:,:]),2))
-                plt.show()                   
+                plt.show()                 
             i += 1       
             return total_loss
         net1.dconv4[0].weight=torch.nn.Parameter(E_torch.view(p1,rmax))       
@@ -193,16 +195,19 @@ for fi in (range(1)):
                 optimizer.step()
                 net1.dconv4[0].weight.data[net1.dconv4[0].weight <= 0] = 0
                 net1.dconv4[0].weight.data[net1.dconv4[0].weight >= 1] = 1
-                if j>0 and j % show_every== 0: 
+                if j>0:
                   Eest=net1.dconv4[0].weight.detach().cpu().squeeze().numpy()
-                  plt.plot(Eest)
-                  plt.show()
-    #%%
-        # if  save_result is True:
-        #         scipy.io.savemat("C:/Users/behnood/Desktop/Test/EestdB%01d%01d.mat" % (fi+2, fj+1),
-        #                           {'Eest%01d%01d' % (fi+2, fj+1):Eest})
-        #         scipy.io.savemat("C:/Users/behnood/Desktop/Test/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
-        #                           {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
-        #         scipy.io.savemat("C:/Users/behnood/Desktop/Test/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
-        #                           {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
+                  if j % show_every== 0: 
+                    plt.plot(Eest)
+                    plt.show()
+                  
+        out_avg_np = out_avg.detach().cpu().squeeze().numpy()
+       
 
+    #%%
+        if  save_result is True:
+                  scipy.io.savemat("Result/EestdB%01d%01d.mat" % (fi+2, fj+1),
+                                    {'Eest%01d%01d' % (fi+2, fj+1):Eest})
+                  scipy.io.savemat("Result/out_avg_npdB%01d%01d.mat" % (fi+2, fj+1),
+                                    {'out_avg_np%01d%01d' % (fi+2, fj+1):out_avg_np.transpose(1,2,0)})
+        #
