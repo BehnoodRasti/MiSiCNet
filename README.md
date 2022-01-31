@@ -7,7 +7,7 @@ MiSiCNet is a deep learning-based technique for blind hyperspectral unmixing. Mi
 
 All the datasets used in the manuscript are uploaded here except WDC which you can download here here https://www.dropbox.com/s/tj65r3c027nbpth/Y_clean.mat?dl=0
 
-To run the code, change the path to the correct directory. You need to install the dependencies, i. e., torch, numpy, and matplotlib (for plotting), scipy.io, tqdm (for simulated datasets). You need to select the value of lambda (your dataset might change, but we use 100 for real datasets) and rmax (the number of endmembers). Here are the results of training over iterations. The gifs show how the endmembers and abundances converge over the iterations for a highly mixed scenario and a noisy simulated dataset (20 dB).
+To run the code, change the path to the correct directory. You need to install the dependencies, i. e., torch, numpy, and matplotlib (for plotting), scipy.io, tqdm (for simulated datasets). You need to select the value of lambda (we use 100 for real datasets but for your dataset might be diiferent) and rmax (the number of endmembers). Here are the results of training over iterations. The gifs show how the endmembers and abundances converge over the iterations for a highly mixed scenario and a noisy simulated dataset (20 dB).
 
 To speed up the processing time you can make the PLOT flag False or set show_every=1000.
 
