@@ -12,6 +12,7 @@ To run the code, change the path to the correct directory. You need to install t
 To speed up the processing time you can make the PLOT flag False or set show_every=1000.
 
 
+![image](https://user-images.githubusercontent.com/61419984/151823999-119f1597-7d44-4b78-8ad7-190b9540d8c7.png)
 <img src="https://user-images.githubusercontent.com/61419984/151020437-d22dc981-2a46-44de-9ef9-a3dd09873b14.gif" width="400" height="200"><img src="https://user-images.githubusercontent.com/61419984/151022010-822e93ab-65b9-4376-b168-c626b2a253bb.gif" width="400" height="200">
 
 
