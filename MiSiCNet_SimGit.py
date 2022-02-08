@@ -40,6 +40,7 @@ dtype = torch.cuda.FloatTensor
 PLOT = True
 #%% Load image
 import scipy.io
+import scipy.linalg
 #%%
 fname2  = "HS Data/Sim1/Y_clean.mat"
 mat2 = scipy.io.loadmat(fname2)
