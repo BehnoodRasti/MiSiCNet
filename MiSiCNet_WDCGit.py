@@ -198,7 +198,7 @@ for fi in tqdm(range(1)):
                 net1.dconv4[0].weight.data[net1.dconv4[0].weight >= 1] = 1
                 if j>0:
                   Eest=net1.dconv4[0].weight.detach().cpu().squeeze().numpy()
-                  if j % show_every== 0: 
+                  if PLOT and j % show_every== 0: 
                     plt.plot(Eest)
                     plt.show()
                   
